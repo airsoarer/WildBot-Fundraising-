@@ -1,0 +1,32 @@
+span {
+    padding-left: 0px !important;
+    margin-top: 20px;
+}
+
+input {
+    margin-bottom: 25px !important;
+    color: white;
+}
+
+#btn {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 24px;
+    text-align: left;
+}
+
+#btn:hover {
+    cursor: pointer;
+}
+
+input::placeholder {
+    color: white;
+}
+
+.incorrect {
+    color: red;
+    display: none;
+    font-size: 18px;
+}
+
