@@ -193,7 +193,7 @@
             let data = snapshot.val();
 
             amountSold = parseInt(data.DriveAndShine.AmountSold) + parseInt(amount);
-            moneyEarned = amountSold * 20;
+            moneyEarned = amountSold * 10;
             amountLeft = 0;
             if(amountSold < 20){
                 amountLeft = 20 - amountSold;
