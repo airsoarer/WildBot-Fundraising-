@@ -42,7 +42,7 @@
 
                 // Create input for amount sold
                 var amountSoldInput = document.createElement("input");
-                amountSoldInput.placeholder = data.DriveAndShine.AmountSold + " Coupons Sold";
+                amountSoldInput.placeholder = data.DriveAndShine.AmountSold + " Packages Sold";
                 amountSoldInput.id = key;
                 amountSoldInput.type = "number";
                 amountSoldInput.classList.add("driveUpdate");
@@ -193,7 +193,7 @@
             let data = snapshot.val();
 
             amountSold = parseInt(data.DriveAndShine.AmountSold) + parseInt(amount);
-            moneyEarned = amountSold * 10;
+            moneyEarned = (amountSold / 2) * 10;
             amountLeft = 0;
             if(amountSold < 20){
                 amountLeft = 20 - amountSold;
