@@ -42,7 +42,7 @@
 
                 // Create input for amount sold
                 var amountSoldInput = document.createElement("input");
-                amountSoldInput.placeholder = data.DriveAndShine.AmountSold + " Packages Sold";
+                amountSoldInput.placeholder = data.DriveAndShine.AmountSold + " Coupons Sold";
                 amountSoldInput.id = key;
                 amountSoldInput.type = "number";
                 amountSoldInput.classList.add("driveUpdate");
