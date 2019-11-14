@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WildBot Fundraising</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/update.css">
+
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- <script src="../js/main.js"></script> -->
+  <script src="../js/update.js"></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="modal" id="addModal">
+        <div class="col m10 offset-m1 modal-content">
+            <h4>Add People</h4>
+            <input type="text" id="addPerson" placeholder="Person Name: ">
+            <button id="add">Add a Person</button>
+        </div>
+    </div>
+    <ul id="slide-out" class="sidenav">
+      <br><br>
+      <li><a href="index.html">Drive-n-Shine Fundraiser</a></li>
+      <li><a href="portaPit.html">Port-a-Pit Fundraiser</a></li>
+      <li><a href="total.html">Total Money Count</a></li>
+      <li><a href="update.html">Tracking Info</a></li>
+      <li><a href="login.html" style="margin-top: 50vh">Admin Login</a></li>
+      <li><button id="logout" style="font-size: 20px; font-weight: 400;">Logout</button></li>
+    </ul>
+    <div class="row top">
+      <a style="margin-top: 35px;" class="col m1 sidenav-trigger" href="#" data-target="slide-out"><i class="material-icons medium">menu</i></a>
+      <h2 class="col m11 left-align">WildBot Fundraising</h2>
+    </div>
+    <div class="row title">
+      <h3 class="col m8 offset-m1 left-align" style="padding-left: 0px;">Update Information</h3>
+      <button id="addTrigger" data-target="addModal" class="col m3 left-align modal-trigger" style="margin-top: 40px;">Add a Person</button>
+    </div>
+    <div class="row">
+        <h4 class="col m10 offset-m1 left-align">Drive-n-Shine</h4>
+    </div>
+    <div class="row drivenshineTable">
+        <table class="col m10 offset-m1 left-align driveTable">
+            <tr>
+                <th>Name</th>
+                <th>Amount of Coupons Sold</th>
+                <th>Money Earned</th>
+                <th>Amount of Coupons left</th>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br><br>
+    <div class="row">
+        <h4 class="col m10 offset-m1 left-align">Port-a-Pit</h4>
+    </div>
+    <div class="row portabitTable">
+        <table class="col m10 offset-m1 left-align portTable">
+            <tr>
+                <th>Name</th>
+                <th>Amount of Tickets Sold</th>
+                <th>Money Earned</th>
+                <th>Amount of Tickets left</th>
+            </tr>
+        </table>
+    </div>
+    <br><br><br><br><br>
+    <div class="row">
+        <h4 class="col m10 offset-m1 left-align">Individual Fundraising</h4>
+    </div>
+    <div class="row individual">
+        <table class="col m10 offset-m1 left-align individualTable">
+            <tr>
+                <th>Name</th>
+                <th>Money Earned</th>
+            </tr>
+        </table>
+    </div>
+  </div>
+</body>
+</html>
