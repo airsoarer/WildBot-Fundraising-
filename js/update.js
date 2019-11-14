@@ -19,7 +19,7 @@
             if(user){
                 firebaseUser = true;
                 $("#addTrigger").css("display", "block");
-                console.log(user);
+                // console.log(user);
             }
         });
         let driveRef = firebase.database().ref("People");
@@ -38,15 +38,35 @@
             if(firebaseUser){
                 // Create cell for Amount Sold
                 var amountSold = document.createElement("td");
+                amountSold.textContent = data.DriveAndShine.AmountSold + " Coupons Sold";
+                amountSold.id = key + "driveShineTd"
                 tr.appendChild(amountSold);
 
-                // Create input for amount sold
-                var amountSoldInput = document.createElement("input");
-                amountSoldInput.placeholder = data.DriveAndShine.AmountSold + " Coupons Sold";
-                amountSoldInput.id = key;
-                amountSoldInput.type = "number";
-                amountSoldInput.classList.add("driveUpdate");
-                amountSold.appendChild(amountSoldInput);
+                // Create amount sold plus button
+                var amountSoldPlus = document.createElement("button");
+                amountSoldPlus.classList.add("drivePlus");
+                amountSoldPlus.id = key;
+                amountSold.appendChild(amountSoldPlus);
+
+                // Create amount sold plus icon
+                var amountSoldPlusIcon = document.createElement("i");
+                amountSoldPlusIcon.classList.add("material-icons");
+                amountSoldPlusIcon.classList.add("small");
+                amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+                amountSoldPlus.append(amountSoldPlusIcon);
+
+                // Create amount sold minus button
+                var amountSoldMinus = document.createElement("button");
+                amountSoldMinus.classList.add("driveMinus");
+                amountSoldMinus.id = key;
+                amountSold.appendChild(amountSoldMinus);
+
+                // Create amount sold plus icon
+                var amountSoldMinusIcon = document.createElement("i");
+                amountSoldMinusIcon.classList.add("material-icons");
+                amountSoldMinusIcon.classList.add("small");
+                amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+                amountSoldMinus.append(amountSoldMinusIcon);
             }else{
                 // Create cell for Amount Sold
                 var amountSold = document.createElement("td");
@@ -57,11 +77,13 @@
             // Create cell for Money Earned 
             var moneyEarned = document.createElement("td");
             moneyEarned.textContent = "$" + data.DriveAndShine.MoneyEarned + " Earned";
+            moneyEarned.id = key + "driveShineMoneyEarned";
             tr.appendChild(moneyEarned);
 
             // Create cell for Amount left 
             var amountLeft = document.createElement("td");
             amountLeft.textContent = data.DriveAndShine.AmountLeft + " Coupons Left";
+            amountLeft.id = key + "driveShineAmountLeft";
             tr.appendChild(amountLeft);
 
             $('.driveTable').append(tr);
@@ -83,15 +105,35 @@
             if(firebaseUser){
                 // Create cell for Amount Sold
                 var amountSold = document.createElement("td");
+                amountSold.textContent = data.PortAPit.AmountSold + " Coupons Sold";
+                amountSold.id = key + "portAPitTd"
                 tr.appendChild(amountSold);
 
-                // Create input for amount sold
-                var amountSoldInput = document.createElement("input");
-                amountSoldInput.placeholder = data.PortAPit.AmountSold + " Tickets Sold";
-                amountSoldInput.id = key;
-                amountSoldInput.type = "number";
-                amountSoldInput.classList.add("portUpdate");
-                amountSold.appendChild(amountSoldInput);
+                // Create amount sold plus button
+                var amountSoldPlus = document.createElement("button");
+                amountSoldPlus.classList.add("portAPitPlus");
+                amountSoldPlus.id = key;
+                amountSold.appendChild(amountSoldPlus);
+
+                // Create amount sold plus icon
+                var amountSoldPlusIcon = document.createElement("i");
+                amountSoldPlusIcon.classList.add("material-icons");
+                amountSoldPlusIcon.classList.add("small");
+                amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+                amountSoldPlus.append(amountSoldPlusIcon);
+
+                // Create amount sold minus button
+                var amountSoldMinus = document.createElement("button");
+                amountSoldMinus.classList.add("portAPitMinus");
+                amountSoldMinus.id = key;
+                amountSold.appendChild(amountSoldMinus);
+
+                // Create amount sold plus icon
+                var amountSoldMinusIcon = document.createElement("i");
+                amountSoldMinusIcon.classList.add("material-icons");
+                amountSoldMinusIcon.classList.add("small");
+                amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+                amountSoldMinus.append(amountSoldMinusIcon);
             }else{
                 // Create cell for Amount Sold
                 var amountSold = document.createElement("td");
@@ -102,11 +144,13 @@
             // Create cell for Money Earned 
             var moneyEarned = document.createElement("td");
             moneyEarned.textContent = "$" + data.PortAPit.MoneyEarned + " Earned";
+            moneyEarned.id = key + "portAPitMoneyEarned";
             tr.appendChild(moneyEarned);
 
             // Create cell for Amount left 
             var amountLeft = document.createElement("td");
             amountLeft.textContent = data.PortAPit.AmountLeft + " Tickets Left";
+            amountLeft.id = key + "portAPitAmountLeft"
             tr.appendChild(amountLeft);
 
             $('.portTable').append(tr);
@@ -148,11 +192,10 @@
         });
 
         $("#add").on('click', add);
-        $(document.body).on('keyup', '.driveUpdate', function(event) {
-            if(event.which === 13){
-                driveUpdate($(this).attr("id"), $(this).val());
-            }
-        });
+        $(document.body).on("click", ".drivePlus", drivePlusUpdate);
+        $(document.body).on("click", ".driveMinus", driveMinusUpdate);
+        $(document.body).on("click", ".portAPitPlus", portAPitPlusUpdate);
+        $(document.body).on("click", ".portAPitMinus", portAPitMinusUpdate);
 
         $(document.body).on("keyup", '.portUpdate', function(event) {
             if(event.which === 13){
@@ -182,60 +225,173 @@
     }
 
     // Drive n Shine Methods
-    function driveUpdate(id, amount){
+    function drivePlusUpdate(){
+        console.log("working");
+        let id = $(this).attr("id");
         let ref = firebase.database().ref("People/" + id);
 
-        let amountLeft = 0
+        let amountLeft = 0;
         let moneyEarned = 0;
         let amountSold = 0;
 
         ref.on("value", (snapshot) => {
             let data = snapshot.val();
 
-            amountSold = parseInt(data.DriveAndShine.AmountSold) + parseInt(amount);
-            moneyEarned = (amountSold / 2) * 10;
-            amountLeft = 0;
-            if(amountSold < 20){
-                amountLeft = 20 - amountSold;
-            }
+            amountSold = data.DriveAndShine.AmountSold;
+            moneyEarned = data.DriveAndShine.MoneyEarned;
+            amountLeft = data.DriveAndShine.AmountLeft;
         });
+
+        amountSold += 1;
+        moneyEarned += 5;
+        amountLeft -= 1;
 
         let update = {
             AmountSold:amountSold,
             MoneyEarned:moneyEarned,
             AmountLeft:amountLeft
         };
+
+        if(amountLeft <= 0){
+            $("#" + id + "driveShineAmountLeft").html("0 Coupons Left");
+        }else {
+            $("#" + id + "driveShineAmountLeft").html(amountLeft + " Coupons Left");
+        }
+
+        $("#" + id + "driveShineTd").html(amountSold + " Coupons Sold");
+        $("#" + id + "driveShineMoneyEarned").html("$" + moneyEarned + " Earned");
+
+        // Create amount sold plus button
+        var amountSoldPlus = document.createElement("button");
+        amountSoldPlus.classList.add("drivePlus");
+        amountSoldPlus.id = id;
+        $("#" + id + "driveShineTd").append(amountSoldPlus);
+
+        // Create amount sold plus icon
+        var amountSoldPlusIcon = document.createElement("i");
+        amountSoldPlusIcon.classList.add("material-icons");
+        amountSoldPlusIcon.classList.add("small");
+        amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+        amountSoldPlus.append(amountSoldPlusIcon);
+
+        // Create amount sold minus button
+        var amountSoldMinus = document.createElement("button");
+        amountSoldMinus.classList.add("driveMinus");
+        amountSoldMinus.id = id;
+        $("#" + id + "driveShineTd").append(amountSoldMinus);
+
+        // Create amount sold plus icon
+        var amountSoldMinusIcon = document.createElement("i");
+        amountSoldMinusIcon.classList.add("material-icons");
+        amountSoldMinusIcon.classList.add("small");
+        amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+        amountSoldMinus.append(amountSoldMinusIcon);
     
         // firebase.database().ref("Total").set({Total:total + moneyEarned});
         firebase.database().ref("/").child("Total").transaction((Total) => {
-            return parseInt(Total) + parseInt(amount * 20);
+            return Total + 5;
         }).then(() => {
             return firebase.database().ref("People/" + id).child("DriveAndShine").update(update);
         }).then(() => {
             firebase.database().ref("People/" + id).child("TotalEarned").transaction((Total) => {
-                return parseInt(Total) + parseInt(amount * 20);
+                return parseInt(Total) + 5;
+            });
+        });
+    }
+
+    function driveMinusUpdate(){
+        let id = $(this).attr("id");
+        let ref = firebase.database().ref("People/" + id);
+
+        let amountLeft = 0;
+        let moneyEarned = 0;
+        let amountSold = 0;
+
+        ref.on("value", (snapshot) => {
+            let data = snapshot.val();
+
+            amountSold = data.DriveAndShine.AmountSold;
+            moneyEarned = data.DriveAndShine.MoneyEarned;
+            amountLeft = data.DriveAndShine.AmountLeft;
+        });
+
+        amountSold -= 1;
+        moneyEarned -= 5;
+        amountLeft += 1;
+
+        let update = {
+            AmountSold:amountSold,
+            MoneyEarned:moneyEarned,
+            AmountLeft:amountLeft
+        };
+
+        if(amountLeft <= 0){
+            $("#" + id + "driveShineAmountLeft").html("0 Coupons Left");
+        }else {
+            $("#" + id + "driveShineAmountLeft").html(amountLeft + " Coupons Left");
+        }
+
+        $("#" + id + "driveShineTd").html(amountSold + " Coupons Sold");
+        $("#" + id + "driveShineMoneyEarned").html("$" + moneyEarned + " Earned");
+
+        // Create amount sold plus button
+        var amountSoldPlus = document.createElement("button");
+        amountSoldPlus.classList.add("drivePlus");
+        amountSoldPlus.id = id;
+        $("#" + id + "driveShineTd").append(amountSoldPlus);
+
+        // Create amount sold plus icon
+        var amountSoldPlusIcon = document.createElement("i");
+        amountSoldPlusIcon.classList.add("material-icons");
+        amountSoldPlusIcon.classList.add("small");
+        amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+        amountSoldPlus.append(amountSoldPlusIcon);
+
+        // Create amount sold minus button
+        var amountSoldMinus = document.createElement("button");
+        amountSoldMinus.classList.add("driveMinus");
+        amountSoldMinus.id = id;
+        $("#" + id + "driveShineTd").append(amountSoldMinus);
+
+        // Create amount sold plus icon
+        var amountSoldMinusIcon = document.createElement("i");
+        amountSoldMinusIcon.classList.add("material-icons");
+        amountSoldMinusIcon.classList.add("small");
+        amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+        amountSoldMinus.append(amountSoldMinusIcon);
+
+        // firebase.database().ref("Total").set({Total:total + moneyEarned});
+        firebase.database().ref("/").child("Total").transaction((Total) => {
+            return Total - 5;
+        }).then(() => {
+            return firebase.database().ref("People/" + id).child("DriveAndShine").update(update);
+        }).then(() => {
+            firebase.database().ref("People/" + id).child("TotalEarned").transaction((Total) => {
+                return parseInt(Total) - 5;
             });
         });
     }
 
     // Port A Pit Methods
-    function portUpdate(id, amount){
+    function portAPitPlusUpdate(){
+        let id = $(this).attr("id");
         let ref = firebase.database().ref("People/" + id);
 
-        let amountLeft = 0
+        let amountLeft = 0;
         let moneyEarned = 0;
         let amountSold = 0;
 
         ref.on("value", (snapshot) => {
             let data = snapshot.val();
 
-            amountSold = parseInt(data.PortAPit.AmountSold) + parseInt(amount);
-            moneyEarned = amountSold * 7;
-            amountLeft = 0;
-            if(amountSold < 20){
-                amountLeft = 20 - amountSold;
-            }
+            amountSold = data.PortAPit.AmountSold;
+            moneyEarned = data.PortAPit.MoneyEarned;
+            amountLeft = data.PortAPit.AmountLeft;
         });
+
+        amountSold += 1;
+        moneyEarned += 5;
+        amountLeft -= 1;
 
         let update = {
             AmountSold:amountSold,
@@ -243,14 +399,123 @@
             AmountLeft:amountLeft
         };
 
+        if(amountLeft <= 0){
+            $("#" + id + "portAPitAmountLeft").html("0 Coupons Left");
+        }else {
+            $("#" + id + "portAPitAmountLeft").html(amountLeft + " Coupons Left");
+        }
+
+        $("#" + id + "portAPitTd").html(amountSold + " Coupons Sold");
+        $("#" + id + "portAPitMoneyEarned").html("$" + moneyEarned + " Earned");
+
+        // Create amount sold plus button
+        var amountSoldPlus = document.createElement("button");
+        amountSoldPlus.classList.add("portAPitPlus");
+        amountSoldPlus.id = id;
+        $("#" + id + "portAPitTd").append(amountSoldPlus);
+
+        // Create amount sold plus icon
+        var amountSoldPlusIcon = document.createElement("i");
+        amountSoldPlusIcon.classList.add("material-icons");
+        amountSoldPlusIcon.classList.add("small");
+        amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+        amountSoldPlus.append(amountSoldPlusIcon);
+
+        // Create amount sold minus button
+        var amountSoldMinus = document.createElement("button");
+        amountSoldMinus.classList.add("portAPitMinus");
+        amountSoldMinus.id = id;
+        $("#" + id + "portAPitTd").append(amountSoldMinus);
+
+        // Create amount sold plus icon
+        var amountSoldMinusIcon = document.createElement("i");
+        amountSoldMinusIcon.classList.add("material-icons");
+        amountSoldMinusIcon.classList.add("small");
+        amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+        amountSoldMinus.append(amountSoldMinusIcon);
+
         // firebase.database().ref("Total").set({Total:total + moneyEarned});
         firebase.database().ref("/").child("Total").transaction((Total) => {
-            return parseInt(Total) + parseInt(amount * 7);
+            return parseInt(Total) + 5;
         }).then(() => {
             return firebase.database().ref("People/" + id).child("PortAPit").update(update);
         }).then(() => {
             firebase.database().ref("People/" + id).child("TotalEarned").transaction((Total) => {
-                return parseInt(Total) + parseInt(amount * 7);
+                return parseInt(Total) + 5;
+            });
+        });
+    }
+
+    // Port A Pit Methods
+    function portAPitMinusUpdate(){
+        let id = $(this).attr("id");
+        let ref = firebase.database().ref("People/" + id);
+
+        let amountLeft = 0;
+        let moneyEarned = 0;
+        let amountSold = 0;
+
+        ref.on("value", (snapshot) => {
+            let data = snapshot.val();
+
+            amountSold = data.PortAPit.AmountSold;
+            moneyEarned = data.PortAPit.MoneyEarned;
+            amountLeft = data.PortAPit.AmountLeft;
+        });
+
+        amountSold -= 1;
+        moneyEarned -= 5;
+        amountLeft += 1;
+
+        let update = {
+            AmountSold:amountSold,
+            MoneyEarned:moneyEarned,
+            AmountLeft:amountLeft
+        };
+
+        if(amountLeft <= 0){
+            $("#" + id + "portAPitAmountLeft").html("0 Coupons Left");
+        }else {
+            $("#" + id + "portAPitAmountLeft").html(amountLeft + " Coupons Left");
+        }
+
+        $("#" + id + "portAPitTd").html(amountSold + " Coupons Sold");
+        $("#" + id + "portAPitMoneyEarned").html("$" + moneyEarned + " Earned");
+
+        // Create amount sold plus button
+        var amountSoldPlus = document.createElement("button");
+        amountSoldPlus.classList.add("portAPitPlus");
+        amountSoldPlus.id = id;
+        $("#" + id + "portAPitTd").append(amountSoldPlus);
+
+        // Create amount sold plus icon
+        var amountSoldPlusIcon = document.createElement("i");
+        amountSoldPlusIcon.classList.add("material-icons");
+        amountSoldPlusIcon.classList.add("small");
+        amountSoldPlusIcon.textContent = "keyboard_arrow_up"
+        amountSoldPlus.append(amountSoldPlusIcon);
+
+        // Create amount sold minus button
+        var amountSoldMinus = document.createElement("button");
+        amountSoldMinus.classList.add("portAPitMinus");
+        amountSoldMinus.id = id;
+        $("#" + id + "portAPitTd").append(amountSoldMinus);
+
+        // Create amount sold plus icon
+        var amountSoldMinusIcon = document.createElement("i");
+        amountSoldMinusIcon.classList.add("material-icons");
+        amountSoldMinusIcon.classList.add("small");
+        amountSoldMinusIcon.textContent = "keyboard_arrow_down"
+        amountSoldMinus.append(amountSoldMinusIcon);
+
+        // firebase.database().ref("Total").set({Total:total + moneyEarned});
+        firebase.database().ref("/").child("Total").transaction((Total) => {
+            return parseInt(Total) - 5;
+        }).then(() => {
+            return firebase.database().ref("People/" + id).child("PortAPit").update(update);
+        }).then(() => {
+            firebase.database().ref("People/" + id).child("TotalEarned").transaction((Total) => {
+                return parseInt(Total) - 5;
             });
         });
     }

@@ -1,0 +1,57 @@
+body {
+    padding-bottom: 50px;
+}
+
+th {
+    font-size: 18px;
+}
+
+input {
+    color: white;
+}
+
+table input {
+    border-bottom: none !important;
+    color: white !important;
+    margin-bottom: -2px !important;
+}
+
+input::placeholder {
+    color: white !important;
+}
+
+button {
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-size: 24px;
+    text-align: left;
+    cursor: pointer;
+}
+
+button:focus {
+    background-color: transparent;
+}
+
+#addTrigger {
+    display: none;
+}
+
+.modal {
+    background-color: #2E8B57;
+    color: white;
+    text-align: left;;
+}
+
+.modal button {
+    margin-top: 25px;
+}
+
+.drivePlus, .portAPitPlus {
+    margin-left: 5vw;
+}
+
+.driveMinus, .portAPitMinus {
+    margin-left: 5vw;
+}
+
