@@ -46,3 +46,12 @@ button:focus {
 .modal button {
     margin-top: 25px;
 }
+
+.drivePlus, .portAPitPlus {
+    margin-left: 5vw;
+}
+
+.driveMinus, .portAPitMinus {
+    margin-left: 5vw;
+}
+
